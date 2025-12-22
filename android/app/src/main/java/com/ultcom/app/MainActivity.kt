@@ -1,4 +1,4 @@
-package com.ultcom
+package com.ultcom.app
 
 import com.facebook.react.ReactActivity
 import com.facebook.react.ReactActivityDelegate

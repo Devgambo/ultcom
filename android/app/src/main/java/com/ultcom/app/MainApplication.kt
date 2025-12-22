@@ -1,4 +1,4 @@
-package com.ultcom
+package com.ultcom.app
 
 import android.app.Application
 import com.facebook.react.PackageList
