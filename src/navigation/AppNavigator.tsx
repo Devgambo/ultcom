@@ -1,4 +1,3 @@
-// src/navigation/AppNavigator.tsx
 import React, { useEffect, useState } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
@@ -11,10 +10,12 @@ import { RootStackParamList } from './types';
 // Import Screens
 import LoginScreen from '../screens/auth/LoginScreen';
 import HomeScreen from '../screens/main/HomeScreen';
-// Create this file if you haven't yet, or comment it out for now
 import ChatScreen from '../screens/main/ChatScreen'; 
+import ProfileSetupScreen from '../screens/auth/ProfileSetupScreen';
+
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
+
 
 const AppNavigator = () => {
   const [initializing, setInitializing] = useState(true);
@@ -43,12 +44,11 @@ const AppNavigator = () => {
     <NavigationContainer>
       <Stack.Navigator screenOptions={{ headerShown: false }}>
         {!user ? (
-          // Auth Stack: User is NOT logged in
           <Stack.Screen name="Login" component={LoginScreen} />
         ) : (
-          // Main Stack: User IS logged in
           <>
             <Stack.Screen name="Home" component={HomeScreen} />
+            <Stack.Screen name="ProfileSetup" component={ProfileSetupScreen} />
             <Stack.Screen 
               name="Chat" 
               component={ChatScreen} 

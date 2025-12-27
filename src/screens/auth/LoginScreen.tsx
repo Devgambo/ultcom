@@ -3,6 +3,7 @@ import { View, Text, TextInput, TouchableOpacity, ActivityIndicator, Alert } fro
 import auth from '@react-native-firebase/auth';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../../navigation/types';
+import firestore from '@react-native-firebase/firestore';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'Login'>;
 
@@ -35,19 +36,31 @@ const LoginScreen = ({ navigation }: Props) => {
 
   // 2. Verify Code Logic
   const confirmCode = async () => {
-    try {
-      setLoading(true);
-      await confirm.confirm(code);
-      // Auth listener in App.tsx (or manual check) usually handles the redirect,
-      // but for now, let's manually go to Home upon success
-      Alert.alert("Success", "You are logged in!");
-      navigation.replace('Home'); 
-    } catch (error) {
-      Alert.alert('Invalid Code', 'The code you entered is incorrect.');
-    } finally {
-      setLoading(false);
+  try {
+    setLoading(true);
+    await confirm.confirm(code);
+    
+    // ⚡ NEW LOGIC: Check if user profile exists
+    const user = auth().currentUser;
+    if (user) {
+      const userDoc = await firestore().collection('users').doc(user.uid).get();
+      
+      if (userDoc.exists()) {
+        // User exists -> AppNavigator handles redirect to Home
+      } else {
+        // New user -> Go to Profile Setup
+        // Note: Since AppNavigator might auto-redirect to Home due to "user" state,
+        // we might need to handle this check in AppNavigator or let Home redirect to Profile.
+        // For now, let's manually push if the listener doesn't catch it fast enough.
+        navigation.navigate('ProfileSetup'); 
+      }
     }
-  };
+  } catch (error) {
+    Alert.alert('Invalid Code', 'The code you entered is incorrect.');
+  } finally {
+    setLoading(false);
+  }
+};
 
   if (confirm) {
     // ---------------- OTP INPUT UI ----------------

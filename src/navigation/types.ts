@@ -1,6 +1,7 @@
 // src/navigation/types.ts
 export type RootStackParamList = {
   Login: undefined; 
+  ProfileSetup: undefined;
   Home: undefined;
   Chat: { 
     chatId: string; 

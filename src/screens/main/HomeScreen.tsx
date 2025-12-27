@@ -1,12 +1,12 @@
-import { Text, View } from 'react-native'
-import React, { Component } from 'react'
+import React from 'react';
+import { View, Text } from 'react-native';
 
-export default class HomeScreen extends Component {
-  render() {
-    return (
-      <View>
-        <Text>HomeScreen</Text>
-      </View>
-    )
-  }
-}
+const HomeScreen = () => {
+  return (
+    <View className="flex-1 justify-center items-center">
+      <Text>Home Screen Coming Soon</Text>
+    </View>
+  );
+};
+
+export default HomeScreen;
