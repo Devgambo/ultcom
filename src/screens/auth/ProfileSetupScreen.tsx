@@ -35,10 +35,7 @@ const ProfileSetupScreen = ({ navigation }: Props) => {
         about: "Hey there! I am using UltCom.",
       });
 
-      // 3. Navigate to Home
-      // We assume AppNavigator will auto-redirect because of the 'user' state,
-      // but explicitly replacing helps force the UI update.
-      navigation.replace('Home'); 
+      // AppNavigator will automatically detect profile creation and navigate to Home
       
     } catch (error: any) {
       Alert.alert("Error", error.message);

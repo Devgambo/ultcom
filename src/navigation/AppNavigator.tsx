@@ -51,9 +51,34 @@ const AppNavigator = () => {
 
   useEffect(() => {
     console.log('🔥 Firebase: Setting up auth listener');
-    const subscriber = onAuthStateChanged(getAuth(), handleAuthStateChanged);
-    return subscriber; // unsubscribe on unmount
+    const authSubscriber = onAuthStateChanged(getAuth(), handleAuthStateChanged);
+    return authSubscriber; // unsubscribe on unmount
   }, []);
+
+  // Listen for profile document changes when user is logged in
+  useEffect(() => {
+    if (!user) return;
+
+    console.log('🔥 Firebase: Setting up profile listener for', user.uid);
+    const profileSubscriber = firestore()
+      .collection('users')
+      .doc(user.uid)
+      .onSnapshot(
+        doc => {
+          const profileExists = doc.exists;
+          console.log('🔥 Firebase: Profile exists:', profileExists);
+          setHasProfile(profileExists);
+          if (initializing) setInitializing(false);
+        },
+        err => {
+          console.error('Error listening to profile:', err);
+          setHasProfile(false);
+          if (initializing) setInitializing(false);
+        }
+      );
+
+    return () => profileSubscriber(); // unsubscribe on unmount
+  }, [user]);
 
   if (initializing) {
     return (
