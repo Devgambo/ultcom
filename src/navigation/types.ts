@@ -8,4 +8,5 @@ export type RootStackParamList = {
     otherUserId: string;
     otherUserName: string 
   };
+  SearchUser: undefined;
 };

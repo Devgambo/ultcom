@@ -1,97 +1,196 @@
-This is a new [**React Native**](https://reactnative.dev) project, bootstrapped using [`@react-native-community/cli`](https://github.com/react-native-community/cli).
+# UltCom 💬
 
-# Getting Started
+**Ultimate Communication** - A modern, real-time chat application built with React Native and Firebase.
 
-> **Note**: Make sure you have completed the [Set Up Your Environment](https://reactnative.dev/docs/set-up-your-environment) guide before proceeding.
+## 🚀 Features
 
-## Step 1: Start Metro
+- ✅ Phone number authentication with OTP verification
+- ✅ Real-time messaging with instant delivery
+- ✅ User profile management
+- ✅ Search users by phone number
+- ✅ Unread message badges
+- ✅ Last message preview
+- ✅ Clean, modern UI with TailwindCSS (NativeWind)
+- ✅ Offline support
+- ✅ Type-safe with TypeScript
 
-First, you will need to run **Metro**, the JavaScript build tool for React Native.
+## 🎯 Upcoming Features (V2)
 
-To start the Metro dev server, run the following command from the root of your React Native project:
+- 🔔 Push notifications
+- 🟢 Online/offline indicators
+- 📸 Profile picture upload
+- ✅ Read receipts
+- 📍 Location sharing
+- 🔒 End-to-end encryption
+- 📹 Video calling (Stream.io integration)
+- 👥 Group chats
 
-```sh
-# Using npm
-npm start
+## 📋 Prerequisites
 
-# OR using Yarn
-yarn start
+> **Note**: Make sure you have completed the [React Native Environment Setup](https://reactnative.dev/docs/set-up-your-environment) before proceeding.
+
+- Node.js >= 20
+- React Native CLI
+- Android Studio (for Android development)
+- Xcode (for iOS development)
+- Firebase project with Authentication & Firestore enabled
+
+## 📦 Installation
+
+### Step 1: Install Dependencies
+
+```bash
+npm install
 ```
 
-## Step 2: Build and run your app
+### Step 2: Install Required Package
 
-With Metro running, open a new terminal window/pane from the root of your React Native project, and use one of the following commands to build and run your Android or iOS app:
-
-### Android
-
-```sh
-# Using npm
-npm run android
-
-# OR using Yarn
-yarn android
+```bash
+npm install react-native-gifted-chat --legacy-peer-deps
 ```
 
-### iOS
+### Step 3: Firebase Setup
 
-For iOS, remember to install CocoaPods dependencies (this only needs to be run on first clone or after updating native deps).
+1. **Create a Firebase Project**
+   - Go to [Firebase Console](https://console.firebase.google.com)
+   - Create a new project or use an existing one
 
-The first time you create a new project, run the Ruby bundler to install CocoaPods itself:
+2. **Enable Authentication**
+   - Navigate to Authentication → Sign-in method
+   - Enable "Phone" authentication
 
-```sh
+3. **Create Firestore Database**
+   - Navigate to Firestore Database
+   - Create database in production mode
+   - Set up security rules (see `SETUP_INSTRUCTIONS.md`)
+
+4. **Create Composite Index**
+   - Collection: `chats`
+   - Fields: `participants` (Array-contains) + `updatedAt` (Descending)
+   - Or wait for the error link when running the app
+
+5. **Download Config Files**
+   - **Android**: Download `google-services.json` → Place in `android/app/`
+   - **iOS**: Download `GoogleService-Info.plist` → Place in `ios/UltCom/`
+
+### Step 4: iOS Setup (iOS only)
+
+```bash
+cd ios
 bundle install
-```
-
-Then, and every time you update your native dependencies, run:
-
-```sh
 bundle exec pod install
+cd ..
 ```
 
-For more information, please visit [CocoaPods Getting Started guide](https://guides.cocoapods.org/using/getting-started.html).
+## 🏃 Running the App
 
-```sh
-# Using npm
+### Start Metro Bundler
+
+```bash
+npm start
+```
+
+### Run on Android
+
+```bash
+npm run android
+```
+
+### Run on iOS
+
+```bash
 npm run ios
-
-# OR using Yarn
-yarn ios
 ```
 
-If everything is set up correctly, you should see your new app running in the Android Emulator, iOS Simulator, or your connected device.
+If everything is set up correctly, you should see UltCom running in your emulator/simulator or connected device.
 
-This is one way to run your app — you can also build it directly from Android Studio or Xcode.
+## 📁 Project Structure
 
-## Step 3: Modify your app
+```
+UltCom/
+├── src/
+│   ├── navigation/
+│   │   ├── AppNavigator.tsx    # Main navigation logic
+│   │   └── types.ts            # Navigation types
+│   ├── screens/
+│   │   ├── auth/
+│   │   │   ├── LoginScreen.tsx         # Phone auth + OTP
+│   │   │   └── ProfileSetupScreen.tsx  # New user profile
+│   │   └── main/
+│   │       ├── HomeScreen.tsx          # Chat list
+│   │       ├── ChatScreen.tsx          # Real-time messaging
+│   │       └── SearchUserScreen.tsx    # Find users
+│   ├── services/
+│   │   └── userServices.ts     # Presence & notifications
+│   └── types/
+│       └── models.ts            # TypeScript interfaces
+├── android/                    # Android native code
+├── ios/                        # iOS native code
+├── SETUP_INSTRUCTIONS.md       # Detailed setup guide
+└── SCHEMA_DOCUMENTATION.md     # Firestore schema docs
+```
 
-Now that you have successfully run the app, let's make changes!
+## 🎮 How to Use
 
-Open `App.tsx` in your text editor of choice and make some changes. When you save, your app will automatically update and reflect these changes — this is powered by [Fast Refresh](https://reactnative.dev/docs/fast-refresh).
+1. **Sign Up/Login**
+   - Enter your phone number with country code
+   - Verify the OTP sent to your phone
+   - Set up your profile (first-time users only)
 
-When you want to forcefully reload, for example to reset the state of your app, you can perform a full reload:
+2. **Start Chatting**
+   - Tap the **+** button on the home screen
+   - Search for a user by phone number
+   - Start messaging instantly!
 
-- **Android**: Press the <kbd>R</kbd> key twice or select **"Reload"** from the **Dev Menu**, accessed via <kbd>Ctrl</kbd> + <kbd>M</kbd> (Windows/Linux) or <kbd>Cmd ⌘</kbd> + <kbd>M</kbd> (macOS).
-- **iOS**: Press <kbd>R</kbd> in iOS Simulator.
+3. **View Conversations**
+   - All your chats appear on the home screen
+   - Unread messages show badges
+   - Tap any chat to continue the conversation
 
-## Congratulations! :tada:
+## 🐛 Troubleshooting
 
-You've successfully run and modified your React Native App. :partying_face:
+### Issue: Composite Index Error
+**Solution:** Click the error link or create index manually in Firebase Console
+- Collection: `chats`
+- Fields: `participants` (array-contains) + `updatedAt` (descending)
 
-### Now what?
+### Issue: OTP Not Received
+**Solution:** 
+- Check Firebase Console → Authentication → Phone is enabled
+- Verify your phone number is correct with country code
+- Check Firebase usage limits
 
-- If you want to add this new React Native code to an existing application, check out the [Integration guide](https://reactnative.dev/docs/integration-with-existing-apps).
-- If you're curious to learn more about React Native, check out the [docs](https://reactnative.dev/docs/getting-started).
+### Issue: "Missing or insufficient permissions"
+**Solution:** Update Firestore security rules (see `SETUP_INSTRUCTIONS.md`)
 
-# Troubleshooting
+### Issue: Build Failures
+**Solution:**
+- Clean build: `cd android && ./gradlew clean && cd ..`
+- iOS: `cd ios && pod deintegrate && pod install && cd ..`
+- Clear Metro cache: `npm start -- --reset-cache`
 
-If you're having issues getting the above steps to work, see the [Troubleshooting](https://reactnative.dev/docs/troubleshooting) page.
+## 📚 Documentation
 
-# Learn More
+- 📄 [SETUP_INSTRUCTIONS.md](./SETUP_INSTRUCTIONS.md) - Detailed setup guide
+- 📊 [SCHEMA_DOCUMENTATION.md](./SCHEMA_DOCUMENTATION.md) - Database schema reference
 
-To learn more about React Native, take a look at the following resources:
+## 🛠️ Tech Stack
 
-- [React Native Website](https://reactnative.dev) - learn more about React Native.
-- [Getting Started](https://reactnative.dev/docs/environment-setup) - an **overview** of React Native and how setup your environment.
-- [Learn the Basics](https://reactnative.dev/docs/getting-started) - a **guided tour** of the React Native **basics**.
-- [Blog](https://reactnative.dev/blog) - read the latest official React Native **Blog** posts.
-- [`@facebook/react-native`](https://github.com/facebook/react-native) - the Open Source; GitHub **repository** for React Native.
+- **Framework:** React Native 0.83.1
+- **Language:** TypeScript
+- **Backend:** Firebase (Auth + Firestore)
+- **Navigation:** React Navigation
+- **Styling:** NativeWind (TailwindCSS)
+- **Chat UI:** React Native Gifted Chat
+
+## 📝 License
+
+MIT License - feel free to use this project for learning or commercial purposes.
+
+## 🤝 Contributing
+
+Contributions, issues, and feature requests are welcome!
+
+---
+
+**Built with ❤️ using React Native and Firebase**

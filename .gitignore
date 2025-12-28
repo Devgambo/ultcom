@@ -35,10 +35,10 @@ local.properties
 !debug.keystore
 .kotlin/
 
-# Firebase
-#
-google-services.json
-GoogleService-Info.plist
+# Firebase (Keep config files in repo, but ignore sensitive ones)
+# Uncomment below if you want to exclude Firebase config from version control:
+# google-services.json
+# GoogleService-Info.plist
 
 # Environment variables
 #
@@ -48,6 +48,13 @@ GoogleService-Info.plist
 .env.development.local
 .env.test.local
 .env.production.local
+
+# VS Code
+.vscode/
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
 
 # node.js
 #
@@ -87,3 +94,20 @@ yarn-error.log
 !.yarn/releases
 !.yarn/sdks
 !.yarn/versions
+
+# Editor directories and files
+.idea/
+.vscode/*
+!.vscode/extensions.json
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# OS
+.DS_Store
+Thumbs.db
+
+SETUP_INSTRUCTIONS.md
+SCHEMA_DOCUMENTATION.md

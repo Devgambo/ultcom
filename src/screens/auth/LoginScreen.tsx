@@ -22,7 +22,6 @@ const LoginScreen = ({ navigation }: Props) => {
     
     setLoading(true);
     try {
-      // Append country code if missing (Hardcoded to +91 or +1 for now)
       const formattedNum = phoneNumber.startsWith('+') ? phoneNumber : `+91${phoneNumber}`;
       const confirmation = await auth().signInWithPhoneNumber(formattedNum);
       setConfirm(confirmation);
@@ -36,31 +35,16 @@ const LoginScreen = ({ navigation }: Props) => {
 
   // 2. Verify Code Logic
   const confirmCode = async () => {
-  try {
-    setLoading(true);
-    await confirm.confirm(code);
-    
-    // ⚡ NEW LOGIC: Check if user profile exists
-    const user = auth().currentUser;
-    if (user) {
-      const userDoc = await firestore().collection('users').doc(user.uid).get();
-      
-      if (userDoc.exists()) {
-        // User exists -> AppNavigator handles redirect to Home
-      } else {
-        // New user -> Go to Profile Setup
-        // Note: Since AppNavigator might auto-redirect to Home due to "user" state,
-        // we might need to handle this check in AppNavigator or let Home redirect to Profile.
-        // For now, let's manually push if the listener doesn't catch it fast enough.
-        navigation.navigate('ProfileSetup'); 
-      }
+    try {
+      setLoading(true);
+      await confirm.confirm(code);
+      // AppNavigator will automatically handle navigation based on profile status
+    } catch (error) {
+      Alert.alert('Invalid Code', 'The code you entered is incorrect.');
+    } finally {
+      setLoading(false);
     }
-  } catch (error) {
-    Alert.alert('Invalid Code', 'The code you entered is incorrect.');
-  } finally {
-    setLoading(false);
-  }
-};
+  };
 
   if (confirm) {
     // ---------------- OTP INPUT UI ----------------
