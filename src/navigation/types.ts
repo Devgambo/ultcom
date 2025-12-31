@@ -9,4 +9,5 @@ export type RootStackParamList = {
     otherUserName: string 
   };
   SearchUser: undefined;
+  Profile: undefined;
 };

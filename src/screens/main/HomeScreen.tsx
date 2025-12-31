@@ -105,8 +105,16 @@ const HomeScreen = ({ navigation }: Props) => {
   return (
     <View className="flex-1 bg-white">
         {/* Header */}
-        <View className="p-4 border-b border-slate-100 bg-white pt-12">
+        <View className="p-4 border-b border-slate-100 bg-white pt-12 flex-row items-center justify-between">
             <Text className="text-3xl font-bold text-slate-800">Chats</Text>
+            <TouchableOpacity
+                onPress={() => navigation.navigate('Profile')}
+                className="w-10 h-10 rounded-full bg-purple-500 items-center justify-center"
+            >
+                <Text className="text-white font-bold text-lg">
+                    {currentUser?.displayName?.charAt(0).toUpperCase() || '?'}
+                </Text>
+            </TouchableOpacity>
         </View>
 
         {chats.length === 0 ? (

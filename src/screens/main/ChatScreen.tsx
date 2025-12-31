@@ -1,6 +1,6 @@
 import React, { useState, useCallback, useEffect, useLayoutEffect } from 'react';
-import { View, Text, TouchableOpacity } from 'react-native';
-import { GiftedChat, IMessage } from 'react-native-gifted-chat';
+import { View, Text, TouchableOpacity, KeyboardAvoidingView, Platform } from 'react-native';
+import { GiftedChat, IMessage, Bubble, InputToolbar } from 'react-native-gifted-chat';
 import firestore from '@react-native-firebase/firestore';
 import auth from '@react-native-firebase/auth';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
@@ -122,19 +122,21 @@ const ChatScreen = ({ route, navigation }: Props) => {
   }
 
   return (
-    <GiftedChat
-      messages={messages}
-      onSend={messages => onSend(messages)}
-      user={{
-        _id: currentUser.uid,
-        name: currentUser.displayName || 'Unknown',
-        avatar: currentUser.photoURL || undefined,
-      }}
-      placeholder="Type a message..."
-      alwaysShowSend
-      showAvatarForEveryMessage
-      scrollToBottom
-    />
+    <View style={{ flex: 1 }}>
+      <GiftedChat
+        messages={messages}
+        onSend={messages => onSend(messages)}
+        user={{
+          _id: currentUser.uid,
+          name: currentUser.displayName || 'Unknown',
+          avatar: currentUser.photoURL || undefined,
+        }}
+        placeholder="Type a message..."
+        alwaysShowSend
+        scrollToBottom
+      />
+      {Platform.OS === 'android' && <KeyboardAvoidingView behavior="padding" />}
+    </View>
   );
 };
 

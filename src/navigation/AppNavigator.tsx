@@ -13,6 +13,7 @@ import HomeScreen from '../screens/main/HomeScreen';
 import ChatScreen from '../screens/main/ChatScreen';
 import ProfileSetupScreen from '../screens/auth/ProfileSetupScreen';
 import SearchUserScreen from '../screens/main/SearchUserScreen';
+import ProfileScreen from '../screens/main/ProfileScreen';
 
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -107,6 +108,11 @@ const AppNavigator = () => {
               name="SearchUser"
               component={SearchUserScreen}
               options={{ presentation: 'modal', headerShown: false }}
+            />
+            <Stack.Screen
+              name="Profile"
+              component={ProfileScreen}
+              options={{ headerShown: false }}
             />
           </>
         )}
