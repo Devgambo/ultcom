@@ -48,16 +48,16 @@ const SearchUserScreen = ({ navigation }: Props) => {
         const chatRef = firestore().collection('chats').doc(chatId);
         const chatDoc = await chatRef.get();
 
-        if (!chatDoc.exists) {
+        if (!chatDoc.exists()) {
             // Create new Chat Room
             await chatRef.set({
                 id: chatId,
                 participants,
                 participantData: {
-                    [currentUser!.uid]: { displayName: currentUser?.displayName, avatarUrl: null },
-                    [otherUser.uid]: { displayName: otherUser.displayName, avatarUrl: otherUser.avatarUrl }
+                    [currentUser!.uid]: { displayName: currentUser?.displayName || 'Unknown', avatarUrl: null },
+                    [otherUser.uid]: { displayName: otherUser.displayName, avatarUrl: otherUser.avatarUrl || null }
                 },
-                lastMessage: { text: "Chat created", createdAt: Date.now(), user: { _id: 'system', name: 'System' } },
+                lastMessage: null,
                 unreadCount: {
                     [currentUser!.uid]: 0,
                     [otherUser.uid]: 0,
@@ -68,7 +68,7 @@ const SearchUserScreen = ({ navigation }: Props) => {
 
         // 3. Navigate to Chat
         setLoading(false);
-        navigation.replace('Chat', { 
+        navigation.navigate('Chat', { 
             chatId, 
             otherUserId: otherUser.uid, 
             otherUserName: otherUser.displayName 
@@ -83,7 +83,16 @@ const SearchUserScreen = ({ navigation }: Props) => {
 
   return (
     <View className="flex-1 bg-white p-6 pt-12">
-        <Text className="text-2xl font-bold text-slate-800 mb-6">New Chat</Text>
+        {/* Header with close button */}
+        <View className="flex-row items-center justify-between mb-6">
+            <Text className="text-2xl font-bold text-slate-800">New Chat</Text>
+            <TouchableOpacity
+                onPress={() => navigation.goBack()}
+                className="w-10 h-10 rounded-full bg-slate-100 items-center justify-center"
+            >
+                <Text className="text-slate-600 text-xl font-bold">✕</Text>
+            </TouchableOpacity>
+        </View>
         
         <Text className="text-slate-600 mb-2 font-medium">Search by Phone Number</Text>
         <TextInput 
